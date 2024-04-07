@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Letter from '../components/Letter';
 import End from '../components/End';
 import Hangman from '../components/Hangman';
+import Dash from '../components/Dash';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from "react";
@@ -107,9 +108,9 @@ const GameMode = () => {
   };
 
   // Affichage du texte en fonction de la locale
-  const guessWordText = locale === 'fr-FR' ? 'Devinez le mot' : 'Guess the word';
   const attemptsText = locale === 'fr-FR' ? 'Tentatives restantes' : 'Remaining attempts';
-  const quitButtonText = locale === 'fr-FR' ? 'Retour à l\'accueil' : 'Back to Home';
+  const quitButtonText = locale === 'fr-FR' ? 'Accueil' : 'Home';
+  const changeWord = locale === 'fr-FR' ? 'Changer' : 'Re-roll';
 
   /* =================MODAL================= */
 
@@ -125,36 +126,76 @@ const GameMode = () => {
 
   return (
     <>
-      <div>
-        <h1>H?NGM?N</h1>
-        <div className='dash'></div>
-        <h2>{guessWordText}</h2>
-        <button onClick={handleQuit}>{quitButtonText}</button>
-        <h3>{attemptsText}: {remainingAttempts}</h3>
-        <Hangman attemptsLeft={remainingAttempts} />
-        {randomWord &&
-          <h3>
-            {randomWord.split('').map((char, index) => (
-              <span key={index}>
-                {foundLetters.includes(char) ? char : '_ '}
-              </span>
-            ))}
-          </h3>
-        }
-      </div>
-      <div className="letter__container">
-        {letter.map((letter, index) => (
-          <Letter
-            key={index}
-            onClick={() => handleLetter(letter)}
-            disabled={foundLetters.includes(letter) || remainingAttempts === 0}
-          >
-            {letter}
-          </Letter>
-        ))}
-      </div>
-      {/* Afficher la modal si showModal est vrai */}
-      {showModal && <End word={randomWord} allLettersFound={allLettersFound} onReload={handleReload} onQuit={handleQuit} />}
+      <section className='game'>
+
+        <div className='header'>
+
+          <div className='btns'>
+            <div>
+              <button onClick={handleQuit}><img src='./img/home.svg'></img></button>
+              <p>{quitButtonText}</p>
+            </div>
+            <div>
+              <button onClick={handleReload}><img src='./img/reload.svg'></img></button>
+              <p>{changeWord}</p>
+            </div>
+          </div>
+
+          <div className='title'>
+            <h1>H?NGM?N</h1>
+            <Dash />
+          </div>
+
+          <div className='btns'></div>
+
+        </div>
+
+
+        <div className='game-container'>
+
+          <div className='hangman-container'>
+
+            <p>{attemptsText}: {remainingAttempts}</p>
+            <img src='./img/board.svg'></img>
+            <Hangman attemptsLeft={remainingAttempts} />
+
+          </div>
+
+          <div className="letter_container">
+
+            <div className='keyboard'>
+              {letter.map((letter, index) => (
+                <Letter
+                  key={index}
+                  onClick={() => handleLetter(letter)}
+                  disabled={foundLetters.includes(letter) || remainingAttempts === 0}
+                >
+                  {letter}
+                </Letter>
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div className='word-container'>
+
+          {randomWord &&
+            <h3 className='guess-word'>
+              {randomWord.split('').map((char, index) => (
+                <span key={index}>
+                  {foundLetters.includes(char) ? char : '_ '}
+                </span>
+              ))}
+            </h3>
+          }
+
+        </div>
+
+        {showModal && <End word={randomWord} allLettersFound={allLettersFound} onReload={handleReload} onQuit={handleQuit} />}
+        
+      </section>
     </>
   );
 };

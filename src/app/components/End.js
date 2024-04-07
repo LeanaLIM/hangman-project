@@ -16,7 +16,7 @@ const End = ({ word, allLettersFound, onReload, onQuit }) => {
     }, []);
 
     // Déterminer le message de la modal en fonction de si toutes les lettres ont été trouvées
-    const modalMessage = allLettersFound ? (locale === 'fr-FR' ? 'Bien joué !' : 'Well done!') : (locale === 'fr-FR' ? 'Game Over' : 'Game Over');
+    const modalMessage = allLettersFound ? (locale === 'fr-FR' ? 'Bien joué !' : 'Well done!') : (locale === 'fr-FR' ? 'Game Over !' : 'Game Over !');
 
     // Affichage du texte en fonction de la locale
     const foundWordText = locale === 'fr-FR' ? 'Vous avez trouvé le mot :)' : 'You found the word :)';
@@ -34,8 +34,10 @@ const End = ({ word, allLettersFound, onReload, onQuit }) => {
                 ) : (
                     <p>{exhaustedAttemptsText}</p>
                 )}
-                <p>{wordText}</p>
-                <h3>{word}</h3>
+                <div>
+                    <p>{wordText}</p>
+                    <h3>{word}</h3>
+                </div>
                 <div className="button-container">
                     <button onClick={onReload}>{reloadButtonText}</button>
                     <button onClick={onQuit}>{quitButtonText}</button>
