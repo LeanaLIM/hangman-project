@@ -283,6 +283,18 @@ p {
   font-weight: bold;
 }
 
+.indice {
+  width: 100px;
+  padding: 0.5rem;
+  border: none;
+  color: white;
+  background-color: #1E1E1E;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
 /* ===============MODAL=============== */
 
 .modal-container {

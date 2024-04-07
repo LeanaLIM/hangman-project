@@ -26,6 +26,8 @@ const GameMode = () => {
   const [allLettersFound, setAllLettersFound] = useState(false);
   const letter = 'abcdefghijklmnopqrstuvwxyz-'.split('');
   const [showModal, setShowModal] = useState(false);
+  const [hintCount, setHintCount] = useState(0); // Compteur d'indices utilisés
+  const [hintLetter, setHintLetter] = useState(null); // Lettre donnée en indice
 
   const searchParams = useSearchParams();
   const [locale, setLocale] = useState(null);
@@ -74,7 +76,7 @@ const GameMode = () => {
 
       const data = await response.json();
       const word = data.word;
-      console.log(word);
+      /* console.log(word); */
       setRandomWord(word);
       setFoundLetters([]);
       setRemainingAttempts(11);
@@ -104,6 +106,16 @@ const GameMode = () => {
         // Afficher la modal lorsque le nombre d'essais restants atteint zéro
         setShowModal(true);
       }
+    }
+  };
+
+  const handleHint = () => {
+    if (hintCount < 3 && randomWord) {
+      const lettersToFind = randomWord.split('').filter(letter => !foundLetters.includes(letter));
+      const randomLetter = lettersToFind[Math.floor(Math.random() * lettersToFind.length)];
+      setHintLetter(randomLetter);
+      setHintCount(hintCount + 1);
+      handleLetter(randomLetter);
     }
   };
 
@@ -163,6 +175,8 @@ const GameMode = () => {
 
           <div className="letter_container">
 
+            <button className='indice' onClick={handleHint}>Indice</button>
+
             <div className='keyboard'>
               {letter.map((letter, index) => (
                 <Letter
@@ -194,7 +208,7 @@ const GameMode = () => {
         </div>
 
         {showModal && <End word={randomWord} allLettersFound={allLettersFound} onReload={handleReload} onQuit={handleQuit} />}
-        
+
       </section>
     </>
   );
