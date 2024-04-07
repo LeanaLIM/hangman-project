@@ -26,7 +26,7 @@
 }
 
 body {
-  background-image: url(/_next/static/media/bg-hangmn.7a905af7.jpeg);
+  background-image: url('../../public/img/bg-hangmn.jpeg');
   background-size: cover;
   width: 100vw;
   height: 100vh;

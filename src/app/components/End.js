@@ -27,21 +27,27 @@ const End = ({ word, allLettersFound, onReload, onQuit }) => {
 
     return (
         <div className="modal-container">
+
             <div className="modal">
+                
                 <h2>{modalMessage}</h2>
+
                 {allLettersFound ? (
                     <p>{foundWordText}</p>
                 ) : (
                     <p>{exhaustedAttemptsText}</p>
                 )}
+
                 <div>
                     <p>{wordText}</p>
                     <h3>{word}</h3>
                 </div>
+
                 <div className="button-container">
                     <button onClick={onReload}>{reloadButtonText}</button>
                     <button onClick={onQuit}>{quitButtonText}</button>
                 </div>
+
             </div>
         </div>
     );
